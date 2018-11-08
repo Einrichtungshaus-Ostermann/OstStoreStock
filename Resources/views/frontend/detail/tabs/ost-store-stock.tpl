@@ -64,7 +64,7 @@
 
         <td>
 
-        {$store->getName()}
+        {$store->getName()} ({$store->getCity()})
 
         </td>
 
@@ -117,13 +117,13 @@
             <td>
         {if $inStore == true}
 
-            <li class="icon--check" style="color: #339900;"></li>
+            <li class="icon--cd" style="color: #339900;"></li>
 
 
 
             {else}
 
-            <li class="icon--cross" style="color: #a12726;"></li>
+            <li class="icon--cd" style="color: #a12726;"></li>
 
 
         {/if}
