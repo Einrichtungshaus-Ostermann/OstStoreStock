@@ -17,6 +17,7 @@ use Shopware_Controllers_Frontend_Detail as Controller;
 use OstStoreStock\Services\ConfigurationServiceInterface;
 use OstStoreStock\Services\StockService;
 use OstStoreStock\Services\StoreService;
+use OstErpApi\Struct\Store;
 
 
 
@@ -136,42 +137,6 @@ class Detail
             return;
 
 
-
-
-
-
-        $sArticle = $view->getAssign( "sArticle" );
-
-        $number = $sArticle['ordernumber'];
-
-
-
-
-
-
-        /* @var $storeService StoreService */
-        $storeService = Shopware()->Container()->get( "ost_store_stock.store_service" );
-
-        $stores = $storeService->get();
-
-
-
-
-        /* @var $stockService StockService */
-        $stockService = Shopware()->Container()->get( "ost_store_stock.stock_service" );
-
-        $article = $stockService->get(
-            $number
-        );
-
-
-
-
-
-        $view->assign( "ostStoreStock", array(
-            'stores'  => $stores,
-            'article' => $article
-        ) );
 
 
 
