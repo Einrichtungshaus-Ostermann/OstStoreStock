@@ -17,7 +17,9 @@ interface StockServiceInterface
     /**
      * ...
      *
+     * @param mixed $number
+     *
      * @return mixed
      */
-    public function get( $number );
+    public function get($number);
 }

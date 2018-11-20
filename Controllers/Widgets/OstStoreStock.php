@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-/**
+/*
  * Einrichtungshaus Ostermann GmbH & Co. KG - Store Stock
  *
  * @package   OstStoreStock
@@ -10,17 +10,11 @@
  * @license   proprietary
  */
 
-// namespace OstStoreStock\Controllers\Widgets;
-
-use Enlight_Controller_Action;
-use Shopware\Components\CSRFWhitelistAware;
-use Exception;
-use OstStoreStock\Services\ConfigurationServiceInterface;
+use OstErpApi\Struct\Article;
+use OstErpApi\Struct\Store;
 use OstStoreStock\Services\StockService;
 use OstStoreStock\Services\StoreService;
-use OstErpApi\Struct\Store;
-use OstErpApi\Struct\Article;
-
+use Shopware\Components\CSRFWhitelistAware;
 
 class Shopware_Controllers_Widgets_OstStoreStock extends Enlight_Controller_Action implements CSRFWhitelistAware
 {
@@ -41,7 +35,6 @@ class Shopware_Controllers_Widgets_OstStoreStock extends Enlight_Controller_Acti
         ));
     }
 
-
     /**
      * ...
      *
@@ -55,103 +48,83 @@ class Shopware_Controllers_Widgets_OstStoreStock extends Enlight_Controller_Acti
         parent::preDispatch();
     }
 
-
     /**
      * ...
      */
     public function getStockTableAction()
     {
         // article number
-        $number = $this->Request()->getParam( "number" );
+        $number = $this->Request()->getParam('number');
 
         // current shopware stock
-        $currentStock = $this->Request()->getParam( "stock" );
-
-
-
-
-
-
-
+        $currentStock = $this->Request()->getParam('stock');
 
         /* @var $storeService StoreService */
-        $storeService = Shopware()->Container()->get( "ost_store_stock.store_service" );
+        $storeService = Shopware()->Container()->get('ost_store_stock.store_service');
 
+        // get every store
         $stores = $storeService->get();
 
+        // get company by foundation configuration
+        $company = (int) Shopware()->Container()->get('ost_foundation.configuration')['company'];
 
-
-
-
-        $foundationConfiguration = Shopware()->Container()->get( "ost_foundation.configuration" );
-
-        $company = (integer) $foundationConfiguration['company'];
-
-
-        $arr = array();
+        // every store for this context
+        $arr = [];
 
         /* @var $store Store */
-        foreach ( $stores as $store )
-        {
-            if ( $store->getCompany()->getKey() != $company )
+        foreach ($stores as $store) {
+
+            // not this company?
+            if ($store->getCompany()->getKey() !== $company) {
+                // ignore
                 continue;
+            }
 
-            if ( $store->getType() == Store::TYPE_ONLINE )
+            // online shop?!
+            if ($store->getType() === Store::TYPE_ONLINE) {
+                // ignore
                 continue;
+            }
 
-            array_push( $arr, $store );
-
+            // add it
+            array_push($arr, $store);
         }
 
-
-
+        // every store
         $stores = $arr;
 
-
         /* @var $stockService StockService */
-        $stockService = Shopware()->Container()->get( "ost_store_stock.stock_service" );
+        $stockService = Shopware()->Container()->get('ost_store_stock.stock_service');
 
         /* @var $article Article */
         $article = $stockService->get(
             $number
         );
 
-
-
-
-
-
+        // calculate summed up live stock
         $liveStock = 0;
 
-
-        foreach ( $stores as $store )
-        {
-            foreach ( $article->getAvailableStock() as $stock )
-            {
-                if ( ( $store->getType() == Store::TYPE_PHYSICAL ) and ( $store->getCompany()->getKey() == $company ) and ( $stock->getStore()->getKey() == $store->getKey() ))
-                {
+        // calculate by every available stock
+        foreach ($stores as $store) {
+            foreach ($article->getAvailableStock() as $stock) {
+                if (($store->getType() === Store::TYPE_PHYSICAL) && ($store->getCompany()->getKey() === $company) && ($stock->getStore()->getKey() === $store->getKey())) {
                     $liveStock += $stock->getQuantity();
-
                 }
             }
         }
 
-
-
-
-        if ( $currentStock != $liveStock )
-        {
-            $query = "
+        // different from our showare stock?!
+        if ($currentStock !== $liveStock) {
+            // update shopware data
+            $query = '
                 UPDATE s_articles.......
-            ";
+            ';
         }
 
-
-
-
-        $this->View()->assign( "ostStoreStock", array(
+        // all good
+        $this->View()->assign('ostStoreStock', [
             'stores'  => $stores,
             'article' => $article
-        ) );
+        ]);
     }
 }

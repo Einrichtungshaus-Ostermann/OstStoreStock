@@ -13,133 +13,85 @@
 namespace OstStoreStock\Listeners\Controllers\Frontend;
 
 use Enlight_Event_EventArgs as EventArgs;
-use Shopware_Controllers_Frontend_Detail as Controller;
 use OstStoreStock\Services\ConfigurationServiceInterface;
-use OstStoreStock\Services\StockService;
-use OstStoreStock\Services\StoreService;
-use OstErpApi\Struct\Store;
-
-
+use Shopware_Controllers_Frontend_Detail as Controller;
 
 class Detail
 {
-
     /**
      * ...
      *
      * @var ConfigurationServiceInterface
      */
-
     protected $configurationService;
 
-
-
     /**
-	 * ...
-	 *
-	 * @var string
-	 */
-
-	protected $viewDir;
-
-
-
-    /**
-	 * ...
-	 *
-     * @param ConfigurationServiceInterface    $configurationService
-	 * @param string                  $viewDir
-	 */
-
-	public function __construct( ConfigurationServiceInterface $configurationService, $viewDir )
-	{
-
-
-		// set params
-        $this->configurationService = $configurationService;
-		$this->viewDir              = $viewDir;
-	}
-
+     * ...
+     *
+     * @var string
+     */
+    protected $viewDir;
 
     /**
      * ...
      *
-     * @param EventArgs   $arguments
-     *
-     * @return void
+     * @param ConfigurationServiceInterface $configurationService
+     * @param string                        $viewDir
      */
+    public function __construct(ConfigurationServiceInterface $configurationService, $viewDir)
+    {
+        // set params
+        $this->configurationService = $configurationService;
+        $this->viewDir = $viewDir;
+    }
 
-    public function onPreDispatch( EventArgs $arguments )
+    /**
+     * ...
+     *
+     * @param EventArgs $arguments
+     */
+    public function onPreDispatch(EventArgs $arguments)
     {
         // get the controller
         /* @var $controller Controller */
-        $controller = $arguments->get( "subject" );
+        $controller = $arguments->get('subject');
 
         // get parameters
-        $request    = $controller->Request();
-        $view       = $controller->View();
-
-
-
-
-
+        $request = $controller->Request();
+        $view = $controller->View();
 
         // only order action
-        if ( strtolower( $request->getActionName() ) != "index" )
+        if (strtolower($request->getActionName()) !== 'index') {
             // nothing to do
             return;
-
-
-
-
-
-
+        }
 
         // assign configuration
-        $view->assign( "ostStoreStockConfiguration", $this->configurationService->get() );
+        $view->assign('ostStoreStockConfiguration', $this->configurationService->get());
 
         // add template dir
-        $view->addTemplateDir( $this->viewDir );
+        $view->addTemplateDir($this->viewDir);
     }
-
-
-
-
-
-
-
-
 
     /**
      * ...
      *
-     * @param EventArgs   $arguments
-     *
-     * @return void
+     * @param EventArgs $arguments
      */
-
-    public function onPostDispatch( EventArgs $arguments )
+    public function onPostDispatch(EventArgs $arguments)
     {
         // get the controller
         /* @var $controller Controller */
-        $controller = $arguments->get( "subject" );
+        $controller = $arguments->get('subject');
 
         // get parameters
-        $request    = $controller->Request();
-        $view       = $controller->View();
-
-
-
+        $request = $controller->Request();
+        $view = $controller->View();
 
         // only order action
-        if ( strtolower( $request->getActionName() ) != "index" )
+        if (strtolower($request->getActionName()) !== 'index') {
             // nothing to do
             return;
-
-
-
-
-
+        }
     }
-
 }

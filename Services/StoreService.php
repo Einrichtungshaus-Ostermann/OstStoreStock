@@ -12,32 +12,23 @@
 
 namespace OstStoreStock\Services;
 
-
-
-
 class StoreService implements StoreServiceInterface
 {
-
-
+    /**
+     * {@inheritdoc}
+     */
     public function get()
     {
-
-
-
         /* @var $api \OstErpApi\Api\Api */
-        $api = Shopware()->Container()->get( "ost_erp_api.api" );
+        $api = Shopware()->Container()->get('ost_erp_api.api');
 
-
+        // find via api
         $stores = $api->findBy(
-            "store",
-            array()
+            'store',
+            []
         );
 
-
+        // return the stores
         return $stores;
-
     }
-
-
-
 }

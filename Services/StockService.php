@@ -12,31 +12,23 @@
 
 namespace OstStoreStock\Services;
 
-
-
-
 class StockService implements StockServiceInterface
 {
-
-
-    public function get( $number )
+    /**
+     * {@inheritdoc}
+     */
+    public function get($number)
     {
-
-
         /* @var $api \OstErpApi\Api\Api */
-        $api = Shopware()->Container()->get( "ost_erp_api.api" );
+        $api = Shopware()->Container()->get('ost_erp_api.api');
 
-
+        // find via api
         $article = $api->findOneBy(
-            "article",
-            array( "[article.number] = " . $number )
+            'article',
+            ['[article.number] = ' . $number]
         );
 
-
+        // return the article
         return $article;
-
     }
-
-
-
 }

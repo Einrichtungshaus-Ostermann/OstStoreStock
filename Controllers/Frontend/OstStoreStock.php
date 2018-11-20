@@ -34,8 +34,6 @@ class OstStoreStock extends Enlight_Controller_Action implements CSRFWhitelistAw
         ));
     }
 
-
-
     /**
      * ...
      */
