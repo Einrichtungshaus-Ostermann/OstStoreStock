@@ -5,7 +5,7 @@
 
 
 {* our table *}
-<table class="ost-store-stock--detail-tab">
+<table class="ost-store-stock--detail-tab--table">
     <thead>
     <tr>
         <td>Filiale</td>
