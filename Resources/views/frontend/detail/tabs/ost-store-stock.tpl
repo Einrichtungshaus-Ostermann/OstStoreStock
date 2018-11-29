@@ -13,6 +13,6 @@
 </div>
 
 {* actual content loaded via widget *}
-<div class="content--description">
+<div class="content--ost-store-stock">
     {action module="widgets" controller="OstStoreStock" action="getStockTable" number="{$sArticle.ordernumber}" stock="{$sArticle.instock}"}
 </div>
