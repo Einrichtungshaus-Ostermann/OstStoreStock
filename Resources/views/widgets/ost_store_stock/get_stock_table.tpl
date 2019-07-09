@@ -8,10 +8,10 @@
 <table class="ost-store-stock--detail-tab--table">
     <thead>
     <tr>
-        <td>OSTERMANN CENTRUM</td>
-        <td>Bestand</td>
-        <td>Ausstellung</td>
-        <td>Koje</td>
+        <td>{s name="header-store"}OSTERMANN CENTRUM{/s}</td>
+        <td>{s name="header-stock"}Bestand{/s}</td>
+        <td>{s name="header-exhibit"}Ausstellung{/s}</td>
+        <td>{s name="header-exhibit-area"}Koje{/s}</td>
     </tr>
     </thead>
     <tbody>

@@ -12,6 +12,9 @@
  * 1.0.1
  * - fixed plugin name
  *
+ * 1.0.2
+ * - added snippets to widget template
+ *
  * @package   OstStoreStock
  *
  * @author    Eike Brandt-Warneke <e.brandt-warneke@ostermann.de>
