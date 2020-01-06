@@ -15,6 +15,9 @@
  * 1.0.2
  * - added snippets to widget template
  *
+ * 1.0.3
+ * - added snippets
+ *
  * @package   OstStoreStock
  *
  * @author    Eike Brandt-Warneke <e.brandt-warneke@ostermann.de>

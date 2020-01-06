@@ -14,7 +14,7 @@
     {$smarty.block.parent}
 
     {* append our tab *}
-    <a href="#" class="tab--link" title="Verfügbarkeit" data-tabName="ost-store-stock">Verfügbarkeit</a>
+    <a href="#" class="tab--link" title="{s name="tab-header-title"}Verfügbarkeit{/s}" data-tabName="ost-store-stock">{s name="tab-header-name"}Verfügbarkeit{/s}</a>
 
 {/block}
 
@@ -29,10 +29,10 @@
     {* our tab container *}
     <div class="tab--container">
         <div class="tab--header">
-            <a href="#" class="tab--title" title="Verfügbarkeit">Verfügbarkeit</a>
+            <a href="#" class="tab--title" title="{s name="tab-container-title"}Verfügbarkeit{/s}">{s name="tab-container-name"}Verfügbarkeit{/s}</a>
         </div>
         <div class="tab--preview">
-            Verfügbarkeit hier...
+            {s name="tab-container-preview"}Verfügbarkeit hier...{/s}
         </div>
         <div class="tab--content">
             {include file="frontend/detail/tabs/ost-store-stock.tpl"}
